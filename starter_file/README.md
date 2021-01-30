@@ -39,10 +39,14 @@
 *TODO*: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
 
 ## Screen Recording
-*TODO* Provide a link to a screen recording of the project in action. Remember that the screencast should demonstrate:
+The screencast of the project can be accessed using the link: https://youtu.be/SD7OUOWWGHA
+<br>It covers the following points:
 - A working model
 - Demo of the deployed  model
 - Demo of a sample request sent to the endpoint and its response
 
 ## Standout Suggestions
-*TODO (Optional):* This is where you can provide information about any standout suggestions that you have attempted.
+One of the standout suggestions was to enable logging in the deployed model. This was achieved by simply adding the following line of code:
+```
+service.update(enable_app_insights=True)
+```

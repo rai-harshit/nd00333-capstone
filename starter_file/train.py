@@ -8,7 +8,7 @@ import pandas as pd
 from azureml.core.run import Run
 from azureml.data.dataset_factory import TabularDatasetFactory
 
-ds = TabularDatasetFactory.from_delimited_files("https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv")
+ds = TabularDatasetFactory.from_delimited_files(path="https://archive.ics.uci.edu/ml/machine-learning-databases/car/car.data",header=False)
 
 def clean_data(raw_df):
     raw_x = raw_df[raw_df.columns[:-1]]
@@ -22,19 +22,23 @@ def main():
     # Add arguments to script
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--n_estimators', type=float, default=1.0, help="Inverse of regularization strength. Smaller values cause stronger regularization")
-    parser.add_argument('--max_iter', type=int, default=100, help="Maximum number of iterations to converge")
+    parser.add_argument('--n_estimators', type=int, default=100, help="The number of trees in the forest")
+    parser.add_argument('--max_depth', type=int, default=None, help="Maximum depth of the tree")
+    parser.add_argument('--criterion', type=str, default="gini", help="Function to measure the quality of the split")
+    parser.add_argument('--max_features', type=int, default="auto", help="Number of features to consider when looking for the best split")
 
     args = parser.parse_args()
     
     x, y = clean_data(ds)
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
 
-    model = RandomForestClassifier(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
+    model = RandomForestClassifier(n_estimators=args.n_estimators,max_depth=args.max_depth,criterion=args.criterion,max_features=args.max_features).fit(x_train, y_train)
     
     run = Run.get_context()
-    run.log("Regularization Strength:", np.float(args.C))
-    run.log("Max iterations:", np.int(args.max_iter))
+    run.log("Number of Estimators: ", np.float(args.n_estimators))
+    run.log("Maximum Depth: ", np.float(args.max_depth))
+    run.log("Criterion: ", args.criterion)
+    run.log("Maximum Features: ", np.float(args.max_features))
 
     accuracy = model.score(x_test, y_test)
     run.log("Accuracy", np.float(accuracy))

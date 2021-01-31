@@ -5,13 +5,23 @@ There are various characteristics of a car which affect its acceptibility among 
 ## Dataset
 
 ### Overview
-*TODO*: Explain about the data you are using and where you got it from.
+
+The Car Evaluation dataset has been taken from the UCI Machine Learning Repository. This dataset contains various structural and technical details about cars on the basis of which they are classified into different categories. Some of those details are:
+  1. Cost of buying the car (low, med, high, vhigh)
+  2. Maintenance of the car (low, med, high, vhigh)
+  3. Number of doors present in the car (2,3,4,5more)
+  4. Number of passengers the car can accomodate (2, 4, more)
+  5. Luggage space in the car (small, med)
+  6. Safety of the car (low, med, high)
+  7. Acceptibility (unacc, acc, good, vgood)
 
 ### Task
-*TODO*: Explain the task you are going to be solving with this dataset and the features you will be using for it.
+
+The task involves classifying the cars into different acceptibility categories and hence this is a Classification problem. Out of the 7 features of the dataset mentioned above, we use the first 6 features (cost of buying, cost of maintaining, number of doors, number of passengers, luggage space, safety) for training the model while the 7th feature (acceptibility) is used as the target column.
 
 ### Access
-*TODO*: Explain how you are accessing the data in your workspace.
+We access the data directly from the UCI ML Repository using the ```TabularDatasetFactory.from_delimited_files()``` method. The screenshot below demonstrates how this method was used.
+![dataset](./screenshots/dataset-access.PNG)
 
 ## Automated ML
 *TODO*: Give an overview of the `automl` settings and configuration you used for this experiment

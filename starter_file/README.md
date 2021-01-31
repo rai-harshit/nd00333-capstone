@@ -1,6 +1,6 @@
-# Car Acceptibility Evaluation
+# Car Acceptibility Evaluator
 
-*TODO:* Write a short introduction to your project.
+There are various characteristics of a car which affect its acceptibility among its users. Some of these characteristics are: cost of buying and maintaining the car, the safety features, the luggage and boot space and the number of passengers it can carry. When these features are combined and compared, some cars have a better acceptance over others. This project involves training a Machine Learning model which takes different characteristics of a car and predicts it acceptance with the users. Once the model is trained, its hosted as a web-service for consumption.
 
 ## Dataset
 

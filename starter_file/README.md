@@ -52,18 +52,41 @@ The RunDetails widget was used to keep track of the running application.
 ![automl-run-details](./screenshots/automl-run-details.PNG)
 
 For improving the results, we could try improving on the following points:
-1. It was reported that the dataset suffered from the problem of class unbalanced. Oversampling and undersampling techniques could be useful in this case.
+1. It was reported that the dataset suffered from the problem of class imbalance. Oversampling and undersampling techniques could be useful in this case.
 2. Allowing the model to run for longer duration will give enough time to AutoML to come up with a better model.
 3. This dataset contained about 1700 records. We can try increasing the number of training data which will be useful in the case of training Deep Neural Networks.
 
 ## Hyperparameter Tuning
-*TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
+We use Random Forests since this is a Classification problem. Random Forests are based on the ensemble learning method and consist of multiple decision tress. Random Forests have been proven to be very effective in Classification and Regression problems.
 
+The early termination policy (Bandit Policy), stops the training process in case the performance of the model starts deteriorating with increasing iteration number. This helps us retain the last best-fitted model and also save the consumption of resources.
+
+In the HyperDrive Configuration, we use the Random Sampler that automates and speeds up the process of trying out different combinations of hyperparameter values in order to obtain the most efficient model. In this case, we have 4 hyperparameters:
+  1. Number of Estimators (50,100,150,200,250)
+  2. Maximum depth of the Decision trees (10,20,30,40,50)
+  3. The criterion used to measure the quality of split (gini,entropy)
+  4. Maximum number of features to be considered while making a split (5,10,15)
+
+The primary metric used to determine is performance of the model is Accuracy. While accuracy is a very standard metric, we could have used other metrics like AUC Score. In order to limit the consumption of resources, we limit the maximum run to 20 iterations and maximum concurrent runs to 5. These values can be further increased based on the availability of the required reosurces.
+
+![hyperdrive-config](./screenshots/hyperdrive-configurations.PNG)
 
 ### Results
-*TODO*: What are the results you got with your model? What were the parameters of the model? How could you have improved it?
+HyperDrive tried different combinations of hyperparameters to derive the following models:
+![hyperdrive-all-models](./screenshots/hyperdrive-all-models.PNG)
 
-*TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+The runId and the values of hyperparamers for the best produced model is as follows:
+![hyperdrive-best-model](./screenshots/hyperdrive-runId-hyperparameters.PNG)
+
+The details of the run can be observed in near-realtime using the RunDetails widget as shown below.
+![hyperdrive-best-model](./screenshots/hyperdrive-run-details.PNG)
+
+To improve the performance of the model we could have performed the following steps:
+  1. Try a different and more complex algorithms like Deep Neural Networks.
+  2. Collect more training data.
+  3. Resolve the class imbalance problem using techniques like Oversampling and Undersampling.
+  4. Try a wider range of hyperparameters.
+  5. Let the HyperDrive run for a longer duration of time instead of limiting it for only 20 iterations.
 
 ## Model Deployment
 *TODO*: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
